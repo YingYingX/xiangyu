@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+        <mvc:annotation-driven></mvc:annotation-driven>
+	<!-- Handler -->
+	<!-- 组件扫描 -->
+	<context:component-scan base-package="com.chinamobile.hnu.xiangyu.web,com.chinamobile.hnu.xiangyu.web.social">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/> 
+	</context:component-scan>
+ <!-- 注解适配器 -->
+ <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" /> -->
+ <!-- 注解映射器 -->
+ <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" /> -->
+ <!-- 视图解析器
+ 解析jsp视图，默认使用jstl表达式，classpath下面有jstl的包
+  -->
+ <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ 	<!-- <property name="suffix" value=".jsp"></property> -->
+ 	</bean>
+	<!--Spring3.1开始的注解 HandlerMapping -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	</bean>
+	<!--Spring3.1开始的注解 HandlerAdapter -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="maxUploadSize" value="100000000" />
+		<property name="maxInMemorySize" value="10240" />
+		<property name="defaultEncoding" value="utf-8"></property>
+	</bean>
+
+	<!-- 视图解析器 解析jsp视图，默认使用jstl表达式，classpath下面有jstl的包 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+
+	<!-- 匹配拦截器 -->
+	<!--
+	<mvc:interceptors>
+		 
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.ecobuild.common.util.TokenInterceptor"/>
+		</mvc:interceptor>
+		 
+	</mvc:interceptors>-->
+	
+	
+	 <!-- 加载配置文件，读取application/session/redis/jdbc/sms/cache参数-->
+    <context:property-placeholder 
+        location="/WEB-INF/classes/constant.properties" file-encoding="UTF8"/>
+	
+</beans>

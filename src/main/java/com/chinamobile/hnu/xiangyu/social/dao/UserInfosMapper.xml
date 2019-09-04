@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.hnu.xiangyu.social.dao.UserInfosMapper">
+
+    <resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.social.pojo.Position">
+        <id column="user_id" jdbcType="BIGINT" property="id" />
+        <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+        <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    </resultMap>
+
+    <select id="getPosition" parameterType="INTEGER" resultMap="BaseResultMap">
+      select longitude,latitude from social_user_info where user_id = #{id}
+    </select>
+
+    <select id="getUser" parameterType="INTEGER" resultMap="BaseResultMap">
+        select user_id,longitude,latitude from social_user_info where user_id = #{id}
+    </select>
+
+    <!--<insert id="setPosition">-->
+      <!--insert into social_user_info values()-->
+    <!--</insert>-->
+
+    <update id="updatePosition">
+      update social_user_info set longitude = #{longitude},latitude = #{latitude} where user_id = #{id}
+    </update>
+</mapper>

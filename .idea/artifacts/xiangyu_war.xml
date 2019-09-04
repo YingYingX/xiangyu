@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="xiangyu:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>xiangyu</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="xiangyu.war">
+      <element id="artifact" artifact-name="xiangyu:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+ http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+
+<!-- 	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" /> -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/dbconfig.properties</value>
+				<value>/WEB-INF/classes/system.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 111阿里 druid 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 数据库基本信息配置 -->
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/mybatis-config.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.chinamobile.hnu.xiangyu.auth.dao,com.chinamobile.hnu.xiangyu.ask.dao,com.chinamobile.hnu.xiangyu.club.dao,
+			com.chinamobile.hnu.xiangyu.common.dao,com.chinamobile.hnu.xiangyu.user.dao,com.chinamobile.hnu.xiangyu.social.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+ 
+	<!-- 缓存配置 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+	
+	<!-- 全局异常处理开始 -->
+	<bean class="com.chinamobile.hnu.xiangyu.util.ExceptionResolver"></bean>
+	<!-- 全局异常处理end-->
+
+	<bean id="cacheManagerFactory"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+	</bean>
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="cacheManagerFactory" />
+	</bean> 
+	
+	<!-- for sms -->
+    <bean id="smsService" class="com.chinamobile.hnu.xiangyu.sms.TelhkSmsService">
+        <property name="url" value="${sms.host}" />
+        <property name="userid" value="${sms.userid}" />
+        <property name="account" value="${sms.account}" />
+        <property name="password" value="${sms.password}" />
+    </bean>
+    
+    <!-- for sotrage -->
+    <bean id="diskStorage" class="com.chinamobile.hnu.xiangyu.util.DiskStorage">
+        <property name="basePrivateDir" value="${storage.private.dir}" />
+        <property name="basePublicDir" value="${storage.public.dir}" />
+    </bean>
+    
+     <!-- 文件上传工具类 -->
+    <bean class="com.chinamobile.hnu.xiangyu.util.UploadDocumentUtil"></bean>
+    
+    <!-- for umeng -->
+ 	<bean id="umengService"
+		class="com.um.service.impl.UmengServiceImpl">
+		<property name="androidAppKey" value="${umeng.android.appkey}" />
+		<property name="androidAppSecret" value="${umeng.android.appsecret}" />
+		<property name="iosAppKey" value="${umeng.ios.appkey}" />
+		<property name="iosAppSecret" value="${umeng.ios.appsecret}" />
+	</bean>
+</beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.hnu.xiangyu.user.dao.AuthTokenMapper">
+
+    <insert id="insert" parameterType="com.chinamobile.hnu.xiangyu.user.pojo.AuthToken">
+        insert into auth_token(`uid`, `token`)
+        values(#{uid},#{token})
+    </insert>
+    
+    <delete id="deleteByToken" parameterType="string">
+        DELETE FROM `auth_token` WHERE `token` = #{token} 
+    </delete>
+
+    <delete id="deleteByUid" parameterType="int">
+        DELETE FROM `auth_token` WHERE `uid` = #{uid} 
+    </delete>
+        
+    <select id="selectByUid"  resultType="String" parameterType="int">
+        select token from auth_token where uid=#{uid}
+    </select>
+
+    <select id="selectByToken"  resultType="int" parameterType="String">
+        select uid from auth_token where token=#{token}
+    </select>
+
+</mapper>
+  

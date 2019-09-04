@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.hnu.xiangyu.club.dao.ClubReleaseMapper">
+
+    <insert id="insert" parameterType="com.chinamobile.hnu.xiangyu.club.pojo.ClubRelease">
+        insert into club_release(bzid,type,club_id,gmt_create) values(#{bzid},#{type},#{clubId},#{gmtCreate})
+    </insert>
+
+    <delete id="delete">
+        delete from club_release where bzid = #{bzid} and type = #{type}
+    </delete>
+    
+    <select id="selectByPage" parameterType="map" resultType="com.chinamobile.hnu.xiangyu.club.vo.ClubReleaseVo">
+        select id,bzid,type from club_release
+        where
+        club_id = #{clubId}
+        <if test="vi.settingVote == 1">
+        	and type != 1
+        </if>
+        <if test="vi.settingActivity == 1">
+        	and type != 2
+        </if>
+        <if test="vi.settingNotice == 1">
+        	and type != 3
+        </if>
+        
+        order by gmt_create desc
+    </select>
+    
+</mapper>

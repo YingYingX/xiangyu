@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.common.dao.PubGradeRuleMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.common.pojo.PubGradeRule">
+
+		<id column="level" property="level"/>
+		<result column="lower" property="lower"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		level,lower
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+	
+		select <include refid="Base_Column_List" /> from pub_grade_rule where level = #{id}
+	</select>
+</mapper>

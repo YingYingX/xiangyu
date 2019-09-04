@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.auth.dao.AuthResourcesMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.auth.pojo.AuthResources">
+
+		<id column="id" property="id"/>
+		<result column="resource_name" property="resourceName"/>
+		<result column="resource_desc" property="resourceDesc"/>
+		<result column="resource_ico" property="resourceIco"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="resource_url" property="resourceUrl"/>
+		<result column="sort_num" property="sortNum"/>
+		<result column="create_time" property="createTime"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id,resource_name,resource_desc,resource_ico,parent_id,resource_url,sort_num,create_time,status
+	</sql>
+	
+	<sql id="Base_Column" >
+		id,resource_name,resource_desc,resource_ico,parent_id,resource_url,sort_num,status
+	</sql>
+	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from auth_resources
+    where id = #{id}
+  </delete>
+  
+   <insert id="insertSelective" parameterType="com.chinamobile.hnu.xiangyu.auth.pojo.AuthResources" useGeneratedKeys="true" keyProperty="id">
+    insert into auth_resources
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="resourceName != null">
+        resource_name,
+      </if>
+      <if test="resourceDesc != null">
+        resource_desc,
+      </if>
+      <if test="resourceIco != null">
+        resource_ico,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="resourceUrl != null">
+        resource_url,
+      </if>
+      <if test="sortNum != null">
+        sort_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+     <if test="id != null">
+        #{id},
+      </if>
+      <if test="resourceName != null">
+        #{resourceName},
+      </if>
+      <if test="resourceDesc != null">
+        #{resourceDesc},
+      </if>
+      <if test="resourceIco != null">
+        #{resourceIco},
+      </if>
+      <if test="parentId != null">
+        #{parentId},
+      </if>
+      <if test="resourceUrl != null">
+        #{resourceUrl},
+      </if>
+      <if test="sortNum != null">
+        #{sortNum},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinamobile.hnu.xiangyu.auth.pojo.AuthResources">
+    update auth_resources
+    <set>
+     <if test="resourceName != null">
+       resource_name = #{resourceName},
+      </if>
+      <if test="resourceDesc != null">
+       resource_desc = #{resourceDesc},
+      </if>
+      <if test="resourceIco != null">
+        resource_ico = #{resourceIco},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId},
+      </if>
+      <if test="resourceUrl != null">
+        resource_url = #{resourceUrl},
+      </if>
+      <if test="sortNum != null">
+       sort_num = #{sortNum},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="status != null">
+      	 status = #{status},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="selectPage" resultMap="BaseResultMap">
+  		select 
+  		<include refid="Base_Column_List" />
+  		from auth_resources
+  		where status = 0
+  </select>
+  
+  <select id="selectResourceList" resultType="java.util.LinkedHashMap">
+  	select
+	<include refid="Base_Column" />
+ 	from auth_resources where status = 0
+  </select>
+  
+  <select id="selectUserResourceList" resultType="java.util.LinkedHashMap" parameterType="java.lang.Integer">
+  	SELECT
+		t2.id,
+		t2.resource_name,
+		t2.resource_desc,
+		t2.resource_ico,
+		t2.parent_id,
+		t2.resource_url
+	FROM
+		auth_role_resources t1
+	LEFT JOIN auth_resources t2 on t1.resource_id = t2.id
+	where t1.role_id = #{roleId}
+	and t2.status = 0
+  </select>
+  
+  <select id="selectByFirstIds" resultType="java.util.LinkedHashMap">
+  		SELECT * FROM `auth_resources` where parent_id = 0 and status = 0
+  </select>
+  
+  <select id="selectUserResourceLists" resultType="java.lang.String" parameterType="java.lang.Integer">
+  	SELECT
+		t2.resource_url
+	FROM
+		auth_role_resources t1
+	LEFT JOIN auth_resources t2 on t1.resource_id = t2.id
+	where t1.role_id = #{roleId}
+	and t2.status = 0
+  </select>
+</mapper>

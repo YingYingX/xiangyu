@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.auth.dao.AuthRoleMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.auth.pojo.AuthRole">
+
+		<id column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		role_id,role_name,
+	</sql>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from auth_role
+    where role_id = #{roleId}
+  </delete>
+  
+   <insert id="insertSelective" parameterType="com.chinamobile.hnu.xiangyu.auth.pojo.AuthRole" useGeneratedKeys="true" keyProperty="roleId">
+    insert into auth_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+     <if test="roleId != null">
+        #{roleId},
+      </if>
+      <if test="roleName != null">
+        #{roleName},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinamobile.hnu.xiangyu.auth.pojo.AuthRole">
+    update auth_role
+    <set>
+      <if test="roleName != null">
+       role_name = #{roleName},
+      </if>
+    </set>
+    where role_id = #{roleId}
+  </update>
+  
+  <delete id="batchDelRolesById" parameterType="list">
+  	delete from auth_role where role_id in 
+  	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>
+  </delete>
+  
+  <select id="selectRoleList" resultType="com.chinamobile.hnu.xiangyu.auth.vo.RoleVo">
+  		SELECT
+			a.role_id as roleId,
+			a.role_name as roleName,
+			b.resourceId
+		FROM
+			`auth_role` a
+		LEFT JOIN (
+			SELECT
+				role_id AS rId,
+				GROUP_CONCAT(resource_id) AS resourceId
+			FROM
+				auth_role_resources
+			GROUP BY
+				rId
+		) b ON a.role_id = b.rId
+  </select>
+  
+  <select id="selectResById" resultType="java.lang.String" parameterType="list">
+  		select  GROUP_CONCAT(resource_name)as resourceName from auth_resources where id in
+  		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+  			#{item}
+  		</foreach>
+  </select>
+</mapper>

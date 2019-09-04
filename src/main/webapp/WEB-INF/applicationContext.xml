@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:context="http://www.springframework.org/schema/context" 
+ xmlns:security="http://www.springframework.org/schema/security"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:task="http://www.springframework.org/schema/task"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-4.3.xsd
+http://www.springframework.org/schema/task 
+http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+>
+    
+    <context:annotation-config/>
+    
+    <context:component-scan base-package="com.chinamobile.hnu.xiangyu.auth.dao,com.chinamobile.hnu.xiangyu.auth.service.impl,com.chinamobile.hnu.xiangyu.ask.dao,com.chinamobile.hnu.xiangyu.ask.service.impl,
+    com.chinamobile.hnu.xiangyu.club.dao,com.chinamobile.hnu.xiangyu.club.service.impl,
+    com.chinamobile.hnu.xiangyu.common.dao,com.chinamobile.hnu.xiangyu.common.service.impl,
+    com.chinamobile.hnu.xiangyu.user.dao,com.chinamobile.hnu.xiangyu.user.service.impl,
+	com.chinamobile.hnu.xiangyu.social.dao,com.chinamobile.hnu.xiangyu.social.service.impl"></context:component-scan>
+
+    	 <!--111 加载配置文件，读取application/session/redis/jdbc/sms/cache参数-->
+    <context:property-placeholder 
+        location="/WEB-INF/classes/constant.properties" file-encoding="UTF8"/>
+    
+    <bean id="clubTask" class="com.chinamobile.hnu.xiangyu.task.ClubTask"></bean>
+	<task:scheduled-tasks>
+		<task:scheduled ref="clubTask" method="clubVisitTask"
+			cron="0 5 0 * * ?" />
+		<task:scheduled ref="clubTask" method="clubVoteTask"
+			cron="0 0/1 * * * ?" />
+		<task:scheduled ref="clubTask" method="askVisitTask"
+			cron="0 5 0 * * ?" />
+	</task:scheduled-tasks>
+    
+</beans>

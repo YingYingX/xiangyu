@@ -1,0 +1,28 @@
+{"label":"导航菜单","index":"0","children":
+  [{"label":"菜单功能","index":"01",
+    "children": [{
+      "label": "菜单功能","index":"0101",
+      "children": [{
+        "label": "菜单功能12345678901234567890","index":"010101"
+      }]
+    }]
+  }, 
+  { "label": "菜单功能","index":"02",
+    "children": [{"label":"菜单功能","index":"0201"},{"label":"菜单功能","index":"0202"},{"label":"菜单功能","index":"0203"},
+      {"label":"菜单功能","index":"0204"},{"label":"菜单功能","index":"0205"},{"label":"菜单功能","index":"0206"},
+      {"label":"菜单功能","index":"0207"},{"label":"菜单功能","index":"0208"},{"label":"菜单功能","index":"0209"}]
+  }, 
+  { "label": "菜单功能","index":"03",
+    "children": [{
+      "label": "菜单功能","index":"0301",
+      "children": [
+        {"label":"菜单功能","index":"030101"},{"label":"菜单功能","index":"030102"},{"label":"菜单功能","index":"030103"},
+        {"label":"菜单功能","index":"030104"},{"label":"菜单功能","index":"030105"},{"label":"菜单功能","index":"030106"},
+        {"label":"菜单功能","index":"030107"},{"label":"菜单功能","index":"030108"},{"label":"菜单功能","index":"030109"},
+        {"label":"菜单功能","index":"030110"},{"label":"菜单功能","index":"030111"},{"label":"菜单功能","index":"030112"},
+        {"label":"菜单功能","index":"030113"},{"label":"菜单功能","index":"030114"},{"label":"菜单功能","index":"030115"},
+        {"label":"菜单功能","index":"030116"},{"label":"菜单功能","index":"030117"},{"label":"菜单功能end","index":"030118"}
+
+      ]
+    }]
+  }]}

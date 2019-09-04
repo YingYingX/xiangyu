@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.common.dao.AppVersionMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.common.pojo.AppVersion">
+
+		<id column="id" property="id"/>
+		<result column="vercode" property="vercode"/>
+		<result column="vername" property="vername"/>
+		<result column="verdesc" property="verdesc"/>
+		<result column="appsize" property="appsize"/>
+		<result column="apppath" property="apppath"/>
+		<result column="uptime" property="uptime"/>
+		<result column="apptype" property="apptype"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id,vercode,vername,verdesc,appsize,apppath,uptime,apptype,
+	</sql>
+	
+	
+	<insert id="insert" parameterType="com.chinamobile.hnu.xiangyu.common.pojo.AppVersion">
+		insert into app_version(vercode,vername,verdesc,appsize,apppath,uptime,apptype)
+		values(#{vercode},#{vername},#{verdesc},#{appsize},#{apppath},#{uptime},#{apptype})
+	</insert>
+	
+	<select id="selectAppVersionNow" parameterType="int" resultType="com.chinamobile.hnu.xiangyu.common.pojo.AppVersion">
+	
+	 select * from app_version 
+        where
+        apptype = #{type}
+        order by id desc limit 0,1
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultType="com.chinamobile.hnu.xiangyu.common.pojo.AppVersion">
+	 select * from app_version order by id desc
+	</select>
+	
+	
+</mapper>

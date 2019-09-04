@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.auth.dao.AuthUserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.auth.pojo.AuthUserRole">
+
+		<id column="role_id" property="roleId"/>
+		<id column="user_id" property="userId"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		role_id,user_id,
+	</sql>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from auth_user_role
+    where role_id = #{roleId} and user_id = #{userId}
+  </delete>
+  
+   <insert id="insertSelective" parameterType="com.chinamobile.hnu.xiangyu.auth.pojo.AuthRole" useGeneratedKeys="true" keyProperty="roleId">
+    insert into auth_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+     <if test="roleId != null">
+        #{roleId},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+    </trim>
+  </insert>
+  
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinamobile.hnu.xiangyu.user.dao.UserPointRecordMapper">
+	<resultMap id="BaseResultMap" type="com.chinamobile.hnu.xiangyu.user.pojo.UserPointRecord">
+
+		<id column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="type" property="type"/>
+		<result column="ruleid" property="ruleid"/>
+		<result column="rulename" property="rulename"/>
+		<result column="amount" property="amount"/>
+		<result column="gentime" property="gentime"/>
+		<result column="comment" property="comment"/>
+		<result column="balance" property="balance"/>
+		<result column="bizid" property="bizid"/>
+		<result column="extid" property="extid"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id,uid,type,ruleid,rulename,amount,gentime,comment,balance,bizid,extid
+	</sql>
+	
+	
+	<select id="selectUserPointRecordToDay" resultType="int">
+		select IFNULL(sum(amount),0) from user_point_record 
+		where 
+		uid = #{uid}
+		and ruleid = #{ruleid}
+		and type = 1 
+		and to_days(gentime) = to_days(now())
+	</select>
+	
+	<select id="selectUserPointRecord" resultMap="BaseResultMap">
+	
+		select <include refid="Base_Column_List" /> from user_point_record
+		where uid = #{uid} and ruleid = #{ruleid}
+		<if test="frequency == 1">
+			and to_days(gentime) = to_days(now())
+		</if>
+		
+	</select>
+	
+	<insert id="insertSelective" parameterType="com.chinamobile.hnu.xiangyu.user.pojo.UserPointRecord">
+		insert into user_point_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="ruleid != null">
+				ruleid,
+			</if>
+			<if test="rulename != null">
+				rulename,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="gentime != null">
+				gentime,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+			<if test="balance != null">
+				balance,
+			</if>
+			<if test="bizid != null">
+				bizid,
+			</if>
+			<if test="extid != null">
+				extid,
+			</if>
+		</trim>
+		
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="uid != null">
+				#{uid},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="ruleid != null">
+				#{ruleid},
+			</if>
+			<if test="rulename != null">
+				#{rulename},
+			</if>
+			<if test="amount != null">
+				#{amount},
+			</if>
+			<if test="gentime != null">
+				#{gentime},
+			</if>
+			<if test="comment != null">
+				#{comment},
+			</if>
+			<if test="balance != null">
+				#{balance},
+			</if>
+			<if test="bizid != null">
+				#{bizid},
+			</if>
+			<if test="extid != null">
+				#{extid},
+			</if>
+		</trim>
+	</insert>
+	
+	
+	
+</mapper>
