@@ -16,7 +16,7 @@
 		<log4j.version>1.2.17</log4j.version>
 		<druid.verison>1.0.29</druid.verison>
 		<spring.verison>4.3.8.RELEASE</spring.verison>
-		<jackson.version>2.9.4</jackson.version>
+		<jackson.version>2.10.1</jackson.version>
 		<jdbc.version>5.1.31</jdbc.version>
 	</properties>
 
@@ -289,19 +289,19 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.5.3</version>
+			<version>2.10.1</version>
 			<!--scope>runtime</scope -->
 		</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
-				<version>2.5.3</version>
+				<version>2.10.1</version>
 				<!--scope>runtime</scope -->
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>2.5.3</version>
+				<version>2.10.1</version>
 				<!--scope>runtime</scope -->
 			</dependency>
     <!-- end  后台-->
