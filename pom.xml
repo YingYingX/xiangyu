@@ -17,7 +17,7 @@
 		<druid.verison>1.0.29</druid.verison>
 		<spring.verison>4.3.8.RELEASE</spring.verison>
 		<jackson.version>2.9.4</jackson.version>
-		<jdbc.version>5.1.31</jdbc.version>
+		<jdbc.version>8.0.16</jdbc.version>
 	</properties>
 
 	<dependencies>
